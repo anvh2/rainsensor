@@ -1,0 +1,22 @@
+{
+  "name": "arduinoapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.14.1",
+    "hbs": "^4.0.6",
+    "path": "^0.12.7",
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3",
+    "socketio-wildcard": "^0.3.0"
+  },
+  "devDependencies": {
+    "ip": "^1.1.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
