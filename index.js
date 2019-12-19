@@ -27,7 +27,6 @@ app.use("/", (req, res, next) => {
   res.render("index");
 });
 
-//giải nén chuỗi JSON thành các OBJECT
 function ParseJson(jsondata) {
   try {
     return JSON.parse(jsondata);
@@ -36,7 +35,6 @@ function ParseJson(jsondata) {
   }
 }
 
-//Bắt các sự kiện khi esp8266 kết nối
 esp8266_nsp.on("connection", function(socket) {
   console.log("esp8266 connected");
 
@@ -44,29 +42,25 @@ esp8266_nsp.on("connection", function(socket) {
     console.log("Disconnect socket esp8266");
   });
 
-  //nhận được bất cứ lệnh nào
   socket.on("*", function(packet) {
-    console.log("esp8266 rev and send to webapp packet: ", packet.data); //in ra để debug
+    console.log("esp8266 rev and send to webapp packet: ", packet.data); 
     var eventName = packet.data[0];
-    var eventJson = packet.data[1] || {}; //nếu gửi thêm json thì lấy json từ lệnh gửi, không thì gửi chuỗi json rỗng, {}
-    webapp_nsp.emit(eventName, eventJson); //gửi toàn bộ lệnh + json đến webapp
+    var eventJson = packet.data[1] || {};
+    webapp_nsp.emit(eventName, eventJson); 
   });
 });
-
-//Bắt các sự kiện khi webapp kết nối
 
 webapp_nsp.on("connection", function(socket) {
   console.log("webapp connected");
 
-  //Khi webapp socket bị mất kết nối
   socket.on("disconnect", function() {
     console.log("Disconnect socket webapp");
   });
 
   socket.on("*", function(packet) {
-    console.log("webapp rev and send to esp8266 packet: ", packet.data); //in ra để debug
+    console.log("webapp rev and send to esp8266 packet: ", packet.data); 
     var eventName = packet.data[0];
-    var eventJson = packet.data[1] || {}; //nếu gửi thêm json thì lấy json từ lệnh gửi, không thì gửi chuỗi json rỗng, {}
-    esp8266_nsp.emit(eventName, eventJson); //gửi toàn bộ lệnh + json đến esp8266
+    var eventJson = packet.data[1] || {}; 
+    esp8266_nsp.emit(eventName, eventJson); 
   });
 });
